@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مبادرة شنط رمضان - اتحاد طلاب هندسة حلوان</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0e4c3c; /* أخضر إسلامي داكن */
+            --accent-color: #d4af37; /* ذهبي */
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- Header & Hero Section --- */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #082e24);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* زخرفة بسيطة للخلفية */
+        header::before {
+            content: "\f6d1"; /* أيقونة فانوس */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 15rem;
+            opacity: 0.05;
+            transform: rotate(-15deg);
+        }
+
+        h1 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 2.5rem;
+            color: var(--accent-color);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .hero-stats {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            border: 1px solid var(--accent-color);
+        }
+
+        /* --- Motivational Section --- */
+        .motivation {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--white);
+            margin: 20px auto;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .hadith {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .hadith i {
+            color: var(--accent-color);
+            font-size: 1rem;
+            vertical-align: middle;
+        }
+
+        .note-box {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            border: 1px solid #ffeeba;
+        }
+
+        /* --- Items Grid --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px 50px;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .item-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .item-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .item-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        .progress-container {
+            background-color: #e9ecef;
+            border-radius: 20px;
+            height: 25px;
+            width: 100%;
+            overflow: hidden;
+            margin: 15px 0 10px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            width: 0%; /* Will be set by JS */
+            transition: width 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .status-text strong {
+            color: var(--primary-color);
+        }
+
+        .completed-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: none; /* Hidden by default */
+        }
+
+        .click-hint {
+            font-size: 0.8rem;
+            text-align: center;
+            color: #999;
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        /* --- Modal (Popup) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover { color: var(--text-color); }
+
+        .modal-title {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .price-guide {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-right: 4px solid var(--accent-color);
+        }
+
+        .price-range {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .contact-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #333;
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>اتحاد طلاب هندسة حلوان</h1>
+        <div class="subtitle">مبادرة شنط رمضان للمشاركة المجتمعية</div>
+        <div class="hero-stats">
+            هدفنا تجميع <strong>50 شنطة</strong> كاملة <i class="fas fa-box-open"></i>
+        </div>
+    </header>
+
+    <section class="motivation">
+        <div class="hadith">
+            <i class="fas fa-quote-right"></i>
+            قال رسول الله ﷺ: "مَنْ فَطَّرَ صَائِماً كَانَ لَهُ مِثْلُ أَجْرِهِ، غَيْرَ أَنَّهُ لاَ يَنْقُصُ مِنْ أَجْرِ الصَّائِمِ شَيْئاً"
+            <i class="fas fa-quote-left"></i>
+        </div>
+        <div class="note-box">
+            <i class="fas fa-exclamation-circle"></i> 
+            <strong>تنبيه هام:</strong> التبرع عيني فقط (سلع ومواد غذائية). ممنوع جمع التبرعات المادية نهائياً.
+        </div>
+        <p style="margin-top: 15px; color: #555;">
+            ساهم ولو بكيس مكرونة، "اتقوا النار ولو بشق تمرة". اضغط على السلعة لمعرفة التفاصيل والأسعار الاسترشادية.
+        </p>
+    </section>
+
+    <div class="container">
+        <div class="items-grid" id="itemsGrid"></div>
+    </div>
+
+    <footer>
+        <p>تم التطوير بواسطة لجنة التكنولوجيا - اتحاد طلاب هندسة حلوان</p>
+        <p>لتسليم السلع: التواصل مع مسؤول اللجنة الاجتماعية أو التوجه لمقر الاتحاد.</p>
+    </footer>
+
+    <div class="modal-overlay" id="itemModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 class="modal-title" id="modalTitle">اسم السلعة</h2>
+            <p id="modalDesc">وصف السلعة وتفاصيلها.</p>
+            
+            <div class="price-guide">
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 5px;">متوسط سعر السوق (للقطعة):</div>
+                <div class="price-range" id="modalPrice">00 - 00 جنيه</div>
+            </div>
+
+            <div style="background: #e7f3fe; padding: 10px; border-radius: 8px; font-size: 0.9rem;">
+                <i class="fas fa-info-circle"></i> 
+                <strong>نصيحة شراء:</strong> <span id="modalTips">تأكد من تاريخ الصلاحية</span>
+            </div>
+
+            <a href="#" class="contact-btn">تواصل للتسليم</a>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // منطقة تعديل البيانات (حدث الأرقام من هنا)
+        // ==========================================
+        const targetBags = 50; // عدد الشنط المستهدف الكلي
+        
+        const itemsData = [
+            {
+                id: 1,
+                name: "أرز (1 كجم)",
+                icon: "fa-bowl-rice",
+                target: 50 * 2, // مثلا نحتاج 2 كيلو لكل شنطة
+                collected: 25,  // <--- غير هذا الرقم عند استلام سلع جديدة
+                priceRange: "30 - 35 جنيه",
+                tips: "يفضل الأرز المصري عريض الحبة (الضحى، الساعة، أو السائب درجة أولى)."
+            },
+            {
+                id: 2,
+                name: "سكر (1 كجم)",
+                icon: "fa-cubes-stacked",
+                target: 50 * 2,
+                collected: 40, // <--- غير هذا الرقم
+                priceRange: "27 - 35 جنيه",
+                tips: "تأكد من أن الكيس محكم الغلق."
+            },
+            {
+                id: 3,
+                name: "زيت خليط (700 مل)",
+                icon: "fa-bottle-droplet",
+                target: 50,
+                collected: 10, // <--- غير هذا الرقم
+                priceRange: "60 - 75 جنيه",
+                tips: "أنواع مثل (هدية، قلية، حلوة) مقبولة جداً."
+            },
+            {
+                id: 4,
+                name: "مكرونة (400 جم)",
+                icon: "fa-wheat-awn",
+                target: 50 * 3, // 3 أكياس للشنطة
+                collected: 80, // <--- غير هذا الرقم
+                priceRange: "12 - 15 جنيه",
+                tips: "يفضل التنويع بين الخواتم والاسباجيتي (الملكة، إيطاليانو)."
+            },
+            {
+                id: 5,
+                name: "سمن نباتي (700 جم)",
+                icon: "fa-jar",
+                target: 50,
+                collected: 5, // <--- غير هذا الرقم
+                priceRange: "90 - 110 جنيه",
+                tips: "روابي، جنة، أو كريستال."
+            },
+            {
+                id: 6,
+                name: "شاي (40 جم)",
+                icon: "fa-mug-hot",
+                target: 50,
+                collected: 50, // اكتملت
+                priceRange: "10 - 12 جنيه",
+                tips: "العروسة أو ليبتون."
+            },
+            {
+                id: 7,
+                name: "صلصة (300 جم)",
+                icon: "fa-utensils",
+                target: 50,
+                collected: 20,
+                priceRange: "20 - 25 جنيه",
+                tips: "برطمان زجاجي أو صفيح."
+            },
+            {
+                id: 8,
+                name: "تمر (1 كجم)",
+                icon: "fa-calendar-day", // بديل للتمر
+                target: 50,
+                collected: 0,
+                priceRange: "40 - 60 جنيه",
+                tips: "تمر ناشف أو نصف جاف صالح للاستخدام."
+            }
+        ];
+
+        // ==========================================
+        // كود تشغيل الصفحة (لا تعدل هنا إلا لو فاهم JS)
+        // ==========================================
+
+        const grid = document.getElementById('itemsGrid');
+        const modal = document.getElementById('itemModal');
+        
+        // دالة رسم العناصر
+        function renderItems() {
+            grid.innerHTML = '';
+            itemsData.forEach(item => {
+                const percent = Math.min(100, Math.round((item.collected / item.target) * 100));
+                const remaining = item.target - item.collected;
+                const isCompleted = item.collected >= item.target;
+                
+                // لون البار يتغير لو اكتمل
+                const barColor = isCompleted ? '#28a745' : 'linear-gradient(90deg, var(--accent-color), var(--primary-color))';
+
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.onclick = () => openModal(item);
+
+                card.innerHTML = `
+                    ${isCompleted ? '<div class="completed-badge">تم الاكتفاء <i class="fas fa-check"></i></div>' : ''}
+                    <div class="item-header">
+                        <div class="item-title">${item.name}</div>
+                        <i class="fas ${item.icon} item-icon"></i>
+                    </div>
+                    
+                    <div class="status-text">
+                        <span>تم تجميع: <strong>${item.collected}</strong></span>
+                        <span>مطلوب: <strong>${item.target}</strong></span>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: ${percent}%; background: ${barColor}">
+                            ${percent > 10 ? percent + '%' : ''}
+                        </div>
+                    </div>
+
+                    <div style="text-align: left; font-size: 0.9rem; color: ${remaining === 0 ? '#28a745' : '#d9534f'}">
+                        ${remaining > 0 ? `باقي ${remaining} قطعة` : 'اكتمل العدد، جزاكم الله خيراً'}
+                    </div>
+
+                    <div class="click-hint">اضغط للتفاصيل والأسعار</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // دالة فتح المودال
+        function openModal(item) {
+            document.getElementById('modalTitle').innerText = item.name;
+            document.getElementById('modalPrice').innerText = item.priceRange;
+            document.getElementById('modalTips').innerText = item.tips;
+            document.getElementById('modalDesc').innerText = `نحتاج لتجميع إجمالي ${item.target} وحدة لتغطية ${targetBags} شنطة. حالياً تم تجميع ${item.collected} وحدة.`;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // إغلاق المودال عند الضغط في الخارج
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // تشغيل الدالة عند التحميل
+        renderItems();
+    </script>
+</body>
+</html>
