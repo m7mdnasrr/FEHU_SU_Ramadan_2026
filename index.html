@@ -10,8 +10,8 @@
     
     <style>
         :root {
-            --primary-color: #0e4c3c; /* أخضر إسلامي داكن */
-            --accent-color: #d4af37; /* ذهبي */
+            --primary-color: #0e4c3c;
+            --accent-color: #d4af37;
             --bg-color: #f9f9f9;
             --text-color: #333;
             --white: #ffffff;
@@ -25,7 +25,6 @@
             color: var(--text-color);
         }
 
-        /* --- Header & Hero Section --- */
         header {
             background: linear-gradient(135deg, var(--primary-color), #082e24);
             color: var(--white);
@@ -35,9 +34,8 @@
             overflow: hidden;
         }
 
-        /* زخرفة بسيطة للخلفية */
         header::before {
-            content: "\f6d1"; /* أيقونة فانوس */
+            content: "\f6d1";
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute;
@@ -70,7 +68,6 @@
             border: 1px solid var(--accent-color);
         }
 
-        /* --- Motivational Section --- */
         .motivation {
             text-align: center;
             padding: 2rem 1rem;
@@ -105,7 +102,6 @@
             border: 1px solid #ffeeba;
         }
 
-        /* --- Items Grid --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -165,7 +161,7 @@
         .progress-bar {
             height: 100%;
             background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
-            width: 0%; /* Will be set by JS */
+            width: 0%;
             transition: width 1s ease-in-out;
             display: flex;
             align-items: center;
@@ -195,7 +191,7 @@
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 0.8rem;
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         .click-hint {
@@ -207,7 +203,6 @@
             padding-top: 10px;
         }
 
-        /* --- Modal (Popup) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -284,7 +279,6 @@
             margin-top: 20px;
         }
 
-        /* --- Footer --- */
         footer {
             background-color: #333;
             color: #ccc;
@@ -315,7 +309,7 @@
             <strong>تنبيه هام:</strong> التبرع عيني فقط (سلع ومواد غذائية). نحن لا نجمع التبرعات المادية نهائياً.
         </div>
         <p style="margin-top: 15px; color: #555;">
-            ساهم ولو بكيس مكرونة، "اتقوا النار ولو بشق تمرة". اضغط على السلعة لمعرفة التفاصيل والأسعار الاسترشادية.
+            ساهم ولو بكيس مكرونة. اضغط على السلعة لمعرفة التفاصيل والأسعار الاسترشادية.
         </p>
     </section>
 
@@ -350,101 +344,107 @@
 
     <script>
         // ==========================================
-        // منطقة تعديل البيانات (حدث الأرقام من هنا)
+        // منطقة تعديل البيانات
         // ==========================================
-        const targetBags = 50; // عدد الشنط المستهدف الكلي
+        const targetBags = 50; // عدد الشنط المستهدف
         
         const itemsData = [
             {
                 id: 1,
                 name: "أرز (1 كجم)",
                 icon: "fa-bowl-rice",
-                target: 50 * 2, // مثلا نحتاج 2 كيلو لكل شنطة
-                collected: 25,  // <--- غير هذا الرقم عند استلام سلع جديدة
+                target: 50 * 2, // 2 كيلو لكل شنطة
+                collected: 0,
                 priceRange: "30 - 35 جنيه",
-                tips: "يفضل الأرز المصري عريض الحبة (الضحى، الساعة، أو السائب درجة أولى)."
+                tips: "يفضل الأرز المصري عريض الحبة."
             },
             {
                 id: 2,
                 name: "سكر (1 كجم)",
                 icon: "fa-cubes-stacked",
-                target: 50 * 2,
-                collected: 40, // <--- غير هذا الرقم
+                target: 50 * 1, // 1 كيلو لكل شنطة
+                collected: 0,
                 priceRange: "27 - 35 جنيه",
                 tips: "تأكد من أن الكيس محكم الغلق."
             },
             {
                 id: 3,
-                name: "زيت خليط (700 مل)",
+                name: "مكرونة (400 جم)",
+                icon: "fa-wheat-awn",
+                target: 50 * 3, // 3 أكياس لكل شنطة
+                collected: 0,
+                priceRange: "12 - 15 جنيه",
+                tips: "يفضل التنويع بين الخواتم والاسباجيتي والمرمرية."
+            },
+            {
+                id: 4,
+                name: "عدس (500 جم)",
+                icon: "fa-bowl-food",
+                target: 50, // كيس واحد (نصف كيلو) لكل شنطة
+                collected: 0,
+                priceRange: "25 - 35 جنيه",
+                tips: "عدس أصفر أو بجبة (يفضل الأصفر)."
+            },
+            {
+                id: 5,
+                name: "فول تدميس (500 جم)",
+                icon: "fa-seedling",
+                target: 50, // كيس واحد لكل شنطة
+                collected: 0,
+                priceRange: "20 - 30 جنيه",
+                tips: "يفضل الفول البلدي فاتح اللون."
+            },
+            {
+                id: 6,
+                name: "لوبيا (500 جم)",
+                icon: "fa-spoon",
+                target: 50, // كيس واحد لكل شنطة
+                collected: 0,
+                priceRange: "30 - 40 جنيه",
+                tips: "تأكد من خلوها من السوس والشوائب."
+            },
+            {
+                id: 7,
+                name: "زيت خليط (700 مل - 1 لتر)",
                 icon: "fa-bottle-droplet",
-                target: 50,
-                collected: 10, // <--- غير هذا الرقم
+                target: 50, // زجاجة لكل شنطة
+                collected: 0,
                 priceRange: "60 - 75 جنيه",
                 tips: "أنواع مثل (هدية، قلية، حلوة) مقبولة جداً."
             },
             {
-                id: 4,
-                name: "مكرونة (400 جم)",
-                icon: "fa-wheat-awn",
-                target: 50 * 3, // 3 أكياس للشنطة
-                collected: 80, // <--- غير هذا الرقم
-                priceRange: "12 - 15 جنيه",
-                tips: "يفضل التنويع بين الخواتم والاسباجيتي (الملكة، إيطاليانو)."
-            },
-            {
-                id: 5,
-                name: "سمن نباتي (700 جم)",
-                icon: "fa-jar",
-                target: 50,
-                collected: 5, // <--- غير هذا الرقم
-                priceRange: "90 - 110 جنيه",
-                tips: "روابي، جنة، أو كريستال."
-            },
-            {
-                id: 6,
+                id: 8,
                 name: "شاي (40 جم)",
                 icon: "fa-mug-hot",
-                target: 50,
-                collected: 50, // اكتملت
-                priceRange: "10 - 12 جنيه",
+                target: 50, // عبوة لكل شنطة
+                collected: 0,
+                priceRange: "10 - 15 جنيه",
                 tips: "العروسة أو ليبتون."
             },
             {
-                id: 7,
+                id: 9,
                 name: "صلصة (300 جم)",
                 icon: "fa-utensils",
-                target: 50,
-                collected: 20,
-                priceRange: "20 - 25 جنيه",
-                tips: "برطمان صفيح او اكياس (لا يفضل البرطمان الزجاجي) ."
-            },
-            {
-                id: 8,
-                name: "تمر (1 كجم)",
-                icon: "fa-calendar-day", // بديل للتمر
-                target: 50,
+                target: 50, // برطمان لكل شنطة
                 collected: 0,
-                priceRange: "40 - 60 جنيه",
-                tips: "تمر ناشف أو نصف جاف صالح للاستخدام."
+                priceRange: "20 - 25 جنيه",
+                tips: "برطمان صفيح أو زجاجي محكم."
             }
         ];
 
         // ==========================================
-        // كود تشغيل الصفحة (لا تعدل هنا إلا لو فاهم JS)
+        // كود التشغيل (Logic)
         // ==========================================
 
         const grid = document.getElementById('itemsGrid');
         const modal = document.getElementById('itemModal');
         
-        // دالة رسم العناصر
         function renderItems() {
             grid.innerHTML = '';
             itemsData.forEach(item => {
                 const percent = Math.min(100, Math.round((item.collected / item.target) * 100));
                 const remaining = item.target - item.collected;
                 const isCompleted = item.collected >= item.target;
-                
-                // لون البار يتغير لو اكتمل
                 const barColor = isCompleted ? '#28a745' : 'linear-gradient(90deg, var(--accent-color), var(--primary-color))';
 
                 const card = document.createElement('div');
@@ -469,8 +469,8 @@
                         </div>
                     </div>
 
-                    <div style="text-align: left; font-size: 0.9rem; color: ${remaining === 0 ? '#28a745' : '#d9534f'}">
-                        ${remaining > 0 ? `باقي ${remaining} قطعة` : 'اكتمل العدد، جزاكم الله خيراً'}
+                    <div style="text-align: left; font-size: 0.9rem; color: ${remaining <= 0 ? '#28a745' : '#d9534f'}">
+                        ${remaining > 0 ? `باقي ${remaining} وحدة` : 'اكتمل العدد'}
                     </div>
 
                     <div class="click-hint">اضغط للتفاصيل والأسعار</div>
@@ -479,13 +479,11 @@
             });
         }
 
-        // دالة فتح المودال
         function openModal(item) {
             document.getElementById('modalTitle').innerText = item.name;
             document.getElementById('modalPrice').innerText = item.priceRange;
             document.getElementById('modalTips').innerText = item.tips;
             document.getElementById('modalDesc').innerText = `نحتاج لتجميع إجمالي ${item.target} وحدة لتغطية ${targetBags} شنطة. حالياً تم تجميع ${item.collected} وحدة.`;
-            
             modal.style.display = 'flex';
         }
 
@@ -493,14 +491,12 @@
             modal.style.display = 'none';
         }
 
-        // إغلاق المودال عند الضغط في الخارج
         window.onclick = function(event) {
             if (event.target == modal) {
                 closeModal();
             }
         }
 
-        // تشغيل الدالة عند التحميل
         renderItems();
     </script>
 </body>
